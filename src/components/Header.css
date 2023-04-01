@@ -1,11 +1,13 @@
 .main {
-  background-color: #222222;
+  background-color: #23d6dc;
   min-width: 400px;
   height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,117,121,1) 35%, rgba(0,212,255,1) 100%);
 }
 
 .input-area {

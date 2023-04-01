@@ -1,70 +1,166 @@
-# Getting Started with Create React App
+# Welcome to NFT distribute webapp :zap:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![API_6](https://user-images.githubusercontent.com/41029842/214244563-08e4f0c2-c865-4f27-99d4-1a1915d97b37.png)
 
-## Available Scripts
+Welcome to the world of NFT!
 
-In the project directory, you can run:
+This NFT distribution webapp is compatible with the API function of "[NFT Garden](https://nftgarden.app)", a multi-chain minting platform. For more information, please check the Docs and website.
 
-### `npm start`
+:link: [API Docs](https://docs.nftgarden.app/en/api/nft-api/v1.1)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+:link: [NFT Garden | Multi-chain minting platform](https://nftgarden.app)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## NFT distribute webapp
 
-### `npm test`
+Distribute app by using the [NFT Garden API](https://docs.nftgarden.app/en/api/nft-api/v1.1)(v1.1) and node.js. Before you start to building, make sure you have node.js(v18.4.0) installed.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Build steps
 
-### `npm run build`
+If you are cloning the project then run this first, otherwise you can download the source code on the release page and skip this step.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+git clone https://github.com/ConnectivCorp/nft-distribute-app.git
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Set API-KEY
+---
+Change the setting of `src/components/post/Post.jsx` according to your environment.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Enter the API key obtained from NFT Garden in the parameter part of `X-API-KEY` .
 
-### `npm run eject`
+WARNING: Please be careful not to disclose the API key to the public.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```node
+const headers = {
+  "Content-Type": "application/json",
+  "X-API-KEY":
+    "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ",
+};
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Set NFT information
+---
+Change the setting of `src/components/post/Post.jsx` for customize NFT information.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+`sender_wallet_address` is FROM address to send NFTs.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+`title` and `description` are for NFT name.
 
-## Learn More
+`key` and `url` are property for NFTs.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```node
+axios
+  .post(
+    `https://nftgarden.app/api/v1/createnfttrans`,
+    {
+      contract_address: contract_address,
+      blockchain: blockchain,
+      sender_wallet_address: "0x9999999999999999999999999999999999999999", // change to distributer's wallet address
+      receiver_wallet_address: receiver_wallet_address,
+      metadata: [
+        {
+          title:
+            "Please input a title here", // customize NFT title
+          description:
+            "Please input a description here", // customize NFT description
+          file_fields: [
+            {
+              key: "image", // customize property for NFT
+              url: "Please input a image url here", // customize property for NFT
+            },
+          ],
+        },
+      ],
+    },
+    { headers: headers }
+  )
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Set Contract address
+---
+Change the setting of `src/lib/const_file/ChainGenaratorOptions.js` . You only need to enter values for the chains you want to activate. `blockchain` for chain.
 
-### Code Splitting
+| Chain/Network | value for blockchain |
+----|---- 
+| Polygon | polygon |
+| Polygon mumbai | polygon-mumbai |
+| Avalanche | avalanche |
+| Avalanche Fuji | avalanche-fuji |
+| Optimism | optimism |
+| Optimism Goreli | optimism-goerli |
+| Astar Network| astar |
+| Shiden Network | astar-shiden |
+| Shibuya Network | astar-shibuya |
+| Fantom | fantom |
+| Fantom testnet | fantom-testnet |
+| BNB Chain | bnb-mainnet |
+| BNB Chain testnet | bnb-testnet |
+| Arbitrum One | arbitrum-one |
+| Arbitrum One Testnet | arbitrum-testnet |
+| Arbitrum Nova | arbitrum-nova |
+| Moonbeam | moonbeam |
+| Moonbase | moonbase |
+| Moonriver | moonriver |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```node
 
-### Analyzing the Bundle Size
+const defaultChainGenarateOptions = [
+  {
+    id: 1,
+    image: <Image w="20px" h="20px" src={Polygon} alt="Polygon_logo" />,
+    name: "Polygon",
+    value: "polygon",
+    contract_address: "Please input a contract address",
+  },
+  {
+    id: 2,
+    image: <Image w="20px" h="20px" src={Avalanche} alt="Avalanche_logo" />,
+    name: "Avalanche",
+    value: "avalanche",
+    contract_address: "Please input a contract address",
+  },
+  {
+    id: 3,
+    image: <Image w="20px" h="20px" src={Optimism} alt="Optimism_logo" />,
+    name: "Optimism",
+    value: "optimism",
+    contract_address: "Please input a contract address",
+  },
+  {
+    id: 4,
+    image: <Image w="20px" h="20px" src={Astar} alt="Astar_logo" />,
+    name: "Astar",
+    value: "astar",
+    contract_address: "Please input a contract address",
+  },
+  {
+    id: 5,
+    image: <Image w="20px" h="20px" src={Shiden} alt="Shiden_logo" />,
+    name: "Shiden",
+    value: "shiden",
+    contract_address: "Please input a contract address",
+  },
+  {
+    id: 6,
+    image: <Image w="20px" h="20px" src={Fantom} alt="Fantom_logo" />,
+    name: "Fantom",
+    value: "fantom",
+    contract_address: "Please input a contract address",
+  },
+];
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+export default defaultChainGenarateOptions;
+```
 
-### Making a Progressive Web App
+### Start scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+npm install
+npm start
+```
 
-### Advanced Configuration
+### Access to your local page.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+http://localhost:3000
+```
