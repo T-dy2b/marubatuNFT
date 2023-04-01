@@ -1,3 +1,5 @@
+NFTGardenのGithubと〇×ゲームを組み合わせて、ゲーム勝利後にNFTを生成する形で実装してみました。
+
 # Welcome to NFT distribute webapp :zap:
 
 ![API_6](https://user-images.githubusercontent.com/41029842/214244563-08e4f0c2-c865-4f27-99d4-1a1915d97b37.png)
